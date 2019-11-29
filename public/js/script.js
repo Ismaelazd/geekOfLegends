@@ -201,7 +201,7 @@ console.log(nbMana)
 
 let tabFleches = [7, 8, 9, 10, 11]
 let nombreFleches = Math.round(Math.random() * 4)
-console.log(nbFleches)
+console.log(nombreFleches)
 
 
 //Création du héros et des bots
@@ -257,3 +257,51 @@ switch (posture) {
         perso.posture = posture
         alert(perso.nom + " est passé en mode " + perso.posture)
 }
+
+function attaquer_boss(){
+    the_boss.nbVie -= perso.nbAttaque;
+    the_boss.nbVie -= bot1.nbAttaque;
+    the_boss.nbVie -= bot2.nbAttaque;
+}
+
+function attaque_du_boss(){
+    let tabPerso=[perso,bot1,bot2]
+    let at = Math.round(Math.random() * 2)
+    tabPerso[at].nbVie-= the_boss.nbAttaque
+}
+
+function poserEnigme(){
+    let enigme1 = "Avant-hier, Catherine avait 17 ans ; l'année prochaine, elle aura 20 ans. Comment est-ce possible ?"
+    let enigme2 = "Je suis d'eau,je suis d'air,et je suis d'électricité. Qui suis-je"
+    let enigme3 = "Pour moi l'accouchement est avant la grossesse, l'enfance avant la naissance, l'adolescence avant l'enfant, la mort avant la vie. Qui suis-je?"
+
+    let reponse1 = "silence"
+    let reponse2 = "courant"
+    let reponse3 = "dictionnaire"
+
+    let tabEnigme = [enigme1,enigme2,enigme3]
+    let tabReponse = [reponse1,reponse2,reponse3]
+
+    let choixEnig = Math.round(Math.random() * 2)
+
+    let question;
+    let essais = 3
+    do{
+        question = prompt(tabEnigme[choixEnig]);
+        essais--;
+    }while((question != tabReponse[choixEnig]) && essais>0)
+    if(essais == 0){
+        perso.nbVie = 0
+        bot1.nbVie = 0
+        bot2.nbVie = 0
+    }
+
+}
+do{
+    attaquer_boss()
+    attaque_du_boss()
+    if(the_boss.nbVie <= 20 ){
+        poserEnigme()
+    }
+    
+}while((the_boss.nbVie > 0) || (perso.nbVie == 0 && bot1.nbVie == 0 && bot2.nbVie == 0))
