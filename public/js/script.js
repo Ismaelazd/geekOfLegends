@@ -124,81 +124,85 @@ class Heros {
     }
 
     attaque() {
-        this.nbAttaque = this.nbAttaque*1.4
-        this.nbVie = this.nbVie*0.75
+        this.nbAttaque = this.nbAttaque * 1.4
+        this.nbVie = this.nbVie * 0.75
     }
 
     defense() {
-        this.nbAttaque = this.nbAttaque*0.5
-        this.nbVie = this.nbVie*2.5
+        this.nbAttaque = this.nbAttaque * 0.5
+        this.nbVie = this.nbVie * 2.5
     }
 }
 
-let Sauron = new Boss('Sauron',500,135)
-let Chronos = new Boss('Chronos',600,130)
-let Lilith = new Boss('Lilith',550,130)
-let tabBoss = [Sauron,Chronos,Lilith]
-let bossChoice = Math.round(Math.random()*2)
+let Sauron = new Boss('Sauron', 500, 135)
+let Chronos = new Boss('Chronos', 600, 130)
+let Lilith = new Boss('Lilith', 550, 130)
+let tabBoss = [Sauron, Chronos, Lilith]
+let bossChoice = Math.round(Math.random() * 2)
 let the_boss = tabBoss[bossChoice]
 let choice;
 let pseudo;
 let perso;
 let bot1;
 let bot2;
-let type,typeBot1,typeBot2;
+let type, typeBot1, typeBot2;
+let posture;
 
+// Demande du choix de héros
 do {
     choice = prompt("Choix du héros ! Guerrier, Mage ou Archer ?")
     choice = choice.charAt().toUpperCase() + choice.substr(1).toLowerCase()
     console.log(choice)
 } while (choice == "" || (choice != "Guerrier" && choice != "Mage" && choice != "Archer"))
 
-
+// Demande d'un pseudo
 do {
     pseudo = prompt("Quel pseudo choisissez-vous ?")
     pseudo = pseudo.charAt().toUpperCase() + pseudo.substr(1).toLowerCase()
 } while (pseudo == "")
 
 
-let tabMana = [9,7,11]
-let nbMana = Math.round(Math.random()*2)
+let tabMana = [9, 7, 11]
+let nbMana = Math.round(Math.random() * 2)
 console.log(nbMana)
 
-let tabFleches=[7,8,9,10,11]
-let nbFleches = Math.round(Math.random()*4)
+let tabFleches = [7, 8, 9, 10, 11]
+let nbFleches = Math.round(Math.random() * 4)
 console.log(nbFleches)
 
+
+//Création du héros et des bots
 switch (choice) {
     case "Guerrier":
-        perso = new Heros(pseudo,100,15);
+        perso = new Heros(pseudo, 100, 15);
         perso.nbRage = 0;
         type = 'Guerrier'
-        bot1=new Heros('Bot1',110,10);
+        bot1 = new Heros('Bot1', 110, 10);
         bot1.mana = tabMana[nbMana];
         typeBot1 = 'Mage'
-        bot2 = new Heros('Bot2',95,20);
+        bot2 = new Heros('Bot2', 95, 20);
         bot2.fleches = tabFleches[nbFleches];
         typeBot2 = 'Archer'
         break;
     case "Mage":
-        perso = new Heros(pseudo,110,10);
+        perso = new Heros(pseudo, 110, 10);
         perso.mana = tabMana[nbMana];
         type = 'Mage';
-        bot1 = new Heros('Bot1',100,15);
+        bot1 = new Heros('Bot1', 100, 15);
         bot1.nbRage = 0;
         typeBot1 = 'Guerrier'
-        bot2 = new Heros('Bot2',95,20);
+        bot2 = new Heros('Bot2', 95, 20);
         bot2.fleches = tabFleches[nbFleches];
         typeBot2 = 'Archer'
         break;
     case "Archer":
-        perso = new Heros(pseudo,95,20);
+        perso = new Heros(pseudo, 95, 20);
         perso.fleches = tabFleches[nbFleches];
         type = 'Archer'
-        bot1=new Heros('Bot1',110,10);
+        bot1 = new Heros('Bot1', 110, 10);
         bot1.mana = tabMana[nbMana];
         typeBot1 = 'Mage'
-        bot2 = new Heros('Bot2',100,15);
+        bot2 = new Heros('Bot2', 100, 15);
         bot2.nbRage = 0;
         typeBot2 = 'Guerrier'
         break;
@@ -206,5 +210,26 @@ switch (choice) {
 
 console.log(perso);
 
-alert("Le Boss est de la partie est "+the_boss.nom);
-alert(perso.nom+" est un "+type+"\n"+bot1.nom+" est un "+typeBot1+"\n"+bot2.nom+" est un "+typeBot2+"\n")
+alert("Le Boss est de la partie est " + the_boss.nom);
+alert(perso.nom + " est un " + type + "\n" + bot1.nom + " est un " + typeBot1 + "\n" + bot2.nom + " est un " + typeBot2 + "\n")
+
+// Demande de la posture 
+do {
+    posture = prompt('Quelle posture choisissez-vous :\n - Attaque\n - Défense\n - Normale')
+    posture = posture.charAt().toUpperCase() + posture.substr(1).toLowerCase()
+    console.log(choice)
+} while (posture == "" || (posture != "Attaque" && posture != "Défense" && posture != "Normale"))
+
+// Activation de la posture
+switch (posture) {
+    case "Attaque":
+        perso.attaque();
+        alert(perso.nom + " est passé en mode " + posture)
+        break;
+    case "Défense":
+        perso.defense();
+        alert(perso.nom + " est passé en mode " + posture)
+        break;
+    default:
+        alert(perso.nom + " est passé en mode " + posture)
+}
