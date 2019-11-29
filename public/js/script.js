@@ -134,6 +134,39 @@ class Heros {
     }
 }
 
+class Guerrier extends Heros {
+    constructor(nom, nbVie, nbAttaque, nbRage) {
+        super(nom, nbVie, nbAttaque);
+        this.nbRage = nbRage;
+        this.type = 'Guerrier';
+        this.posture = '';
+    }
+}
+
+
+class Mage extends Heros {
+    constructor(nom, nbVie, nbAttaque, mana) {
+        super(nom, nbVie, nbAttaque);
+        this.mana = mana;
+        this.type = 'Mage';
+        this.posture= '';
+    }
+
+}
+
+class Archer extends Heros {
+    constructor(nom, nbVie, nbAttaque, nbFleches) {
+        super(nom, nbVie, nbAttaque);
+        this.nbFleches = nbFleches;
+        this.type = 'Archer';
+        this.posture = '';
+    }
+
+}
+
+
+
+
 let Sauron = new Boss('Sauron', 500, 135)
 let Chronos = new Boss('Chronos', 600, 130)
 let Lilith = new Boss('Lilith', 550, 130)
@@ -145,7 +178,7 @@ let pseudo;
 let perso;
 let bot1;
 let bot2;
-let type, typeBot1, typeBot2;
+let mana,fleches;
 let posture;
 
 // Demande du choix de héros
@@ -167,51 +200,39 @@ let nbMana = Math.round(Math.random() * 2)
 console.log(nbMana)
 
 let tabFleches = [7, 8, 9, 10, 11]
-let nbFleches = Math.round(Math.random() * 4)
+let nombreFleches = Math.round(Math.random() * 4)
 console.log(nbFleches)
 
 
 //Création du héros et des bots
 switch (choice) {
     case "Guerrier":
-        perso = new Heros(pseudo, 100, 15);
-        perso.nbRage = 0;
-        type = 'Guerrier'
-        bot1 = new Heros('Bot1', 110, 10);
-        bot1.mana = tabMana[nbMana];
-        typeBot1 = 'Mage'
-        bot2 = new Heros('Bot2', 95, 20);
-        bot2.fleches = tabFleches[nbFleches];
-        typeBot2 = 'Archer'
+        perso = new Guerrier(pseudo, 100, 15, 0);
+        mana = tabMana[nbMana];
+        bot1 = new Mage('Bot1', 110, 10, mana);
+        fleches = tabFleches[nombrebFleches];
+        bot2 = new Heros('Bot2', 95, 20, fleches);
         break;
     case "Mage":
-        perso = new Heros(pseudo, 110, 10);
-        perso.mana = tabMana[nbMana];
-        type = 'Mage';
-        bot1 = new Heros('Bot1', 100, 15);
-        bot1.nbRage = 0;
-        typeBot1 = 'Guerrier'
-        bot2 = new Heros('Bot2', 95, 20);
-        bot2.fleches = tabFleches[nbFleches];
-        typeBot2 = 'Archer'
+        mana = tabMana[nbMana];
+        perso = new Mage(pseudo, 110, 10,mana);    
+        bot1 = new Guerrier('Bot1', 100, 15,0);
+        fleches = tabFleches[nombreFleches];
+        bot2 = new Archer('Bot2', 95, 20,fleches);
         break;
     case "Archer":
-        perso = new Heros(pseudo, 95, 20);
-        perso.fleches = tabFleches[nbFleches];
-        type = 'Archer'
-        bot1 = new Heros('Bot1', 110, 10);
-        bot1.mana = tabMana[nbMana];
-        typeBot1 = 'Mage'
-        bot2 = new Heros('Bot2', 100, 15);
-        bot2.nbRage = 0;
-        typeBot2 = 'Guerrier'
+        fleches = tabFleches[nombreFleches];
+        perso = new Archer(pseudo, 95, 20,fleches);
+        mana = tabMana[nbMana];
+        bot1 = new Mage('Bot1', 110, 10,mana);
+        bot2 = new Guerrier('Bot2', 100, 15,0);
         break;
 }
 
 console.log(perso);
 
 alert("Le Boss est de la partie est " + the_boss.nom);
-alert(perso.nom + " est un " + type + "\n" + bot1.nom + " est un " + typeBot1 + "\n" + bot2.nom + " est un " + typeBot2 + "\n")
+alert(perso.nom + " est un " + perso.type + "\n" + bot1.nom + " est un " + bot1.type + "\n" + bot2.nom + " est un " + bot2.type + "\n")
 
 // Demande de la posture 
 do {
@@ -224,12 +245,15 @@ do {
 switch (posture) {
     case "Attaque":
         perso.attaque();
-        alert(perso.nom + " est passé en mode " + posture)
+        perso.posture = posture
+        alert(perso.nom + " est passé en mode " + perso.posture)
         break;
     case "Défense":
         perso.defense();
-        alert(perso.nom + " est passé en mode " + posture)
+        perso.posture = posture;
+        alert(perso.nom + " est passé en mode " + perso.posture)
         break;
     default:
-        alert(perso.nom + " est passé en mode " + posture)
+        perso.posture = posture
+        alert(perso.nom + " est passé en mode " + perso.posture)
 }
