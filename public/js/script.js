@@ -100,9 +100,72 @@
 // ## Bonus :
 
 // >- Pour l'énigme, la réponse de l'utilisateur devra être mise en minuscule et les éventuels espace supprimés (exemple : "Un Marron" => "unmarron"). Il faudra aussi trouver une méthode qui permet de vérifier si la bonne réponse est contenue dans la réponse de l'utilisateur (exemple : bonne réponse = "homme", réponse utilisateur = "les HoMmEs" => la réponse est bonne).
-class Boss{
-    constructor(nom,nbVie,nbAttaque){
+
+class Boss {
+    constructor(nom, nbVie, nbAttaque) {
         this.nom = nom
-        
+        this.nbVie = nbVie
+        this.nbAttaque = nbAttaque
+    }
+    poserEnigme() {
+        alert("Avant-hier, Catherine avait 17 ans ; l'année prochaine, elle aura 20 ans. Comment est-ce possible ?");
     }
 }
+
+class Heros {
+    constructor(nom, nbVie, nbAttaque) {
+        this.nom = nom
+        this.nbVie = nbVie
+        this.nbAttaque = nbAttaque
+
+    }
+    attaque() {
+        this.nbAttaque = this.nbAttaque*1.4
+        this.nbVie = this.nbVie*0.75
+    }
+    
+    defense() {
+        this.nbAttaque = this.nbAttaque*0.5
+        this.nbVie = this.nbVie*2.5
+    }
+}
+
+
+let choice;
+do {
+    choice = prompt("Choix du héros ! Guerrier, Mage ou Archer ?")
+    choice = choice.charAt().toUpperCase() + choice.substr(1).toLowerCase()
+    console.log(choice)
+} while (choice == "" || (choice != "Guerrier" && choice != "Mage" && choice != "Archer"))
+
+let pseudo;
+do {
+    pseudo = prompt("Quel pseudo choisissez-vous ?")
+    pseudo = pseudo.charAt().toUpperCase() + pseudo.substr(1).toLowerCase()
+} while (pseudo == "")
+
+let perso
+let tabMana = [9,7,11]
+let nbMana = Math.round(Math.random()*2)
+console.log(nbMana)
+
+let tabFleches=[7,8,9,10,11]
+let nbFleches = Math.round(Math.random()*4)
+console.log(nbFleches)
+
+switch (choice) {
+    case "Guerrier":
+        perso = new Heros(pseudo,100,15);
+        perso.nbRage = 0;
+        break;
+    case "Mage":
+        perso = new Heros(pseudo,110,10);
+        perso.mana = nbMana;
+        break;
+    case "Archer":
+        perso = new Heros(pseudo,95,20);
+        perso.fleches = nbFleches;
+        break;
+}
+
+console.log(perso);
