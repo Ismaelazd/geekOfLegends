@@ -107,9 +107,7 @@ class Boss {
         this.nbVie = nbVie
         this.nbAttaque = nbAttaque
     }
-    poserEnigme() {
-        alert("Avant-hier, Catherine avait 17 ans ; l'année prochaine, elle aura 20 ans. Comment est-ce possible ?");
-    }
+    
 }
 
 
@@ -210,8 +208,8 @@ switch (choice) {
         perso = new Guerrier(pseudo, 100, 15, 0);
         mana = tabMana[nbMana];
         bot1 = new Mage('Bot1', 110, 10, mana);
-        fleches = tabFleches[nombrebFleches];
-        bot2 = new Heros('Bot2', 95, 20, fleches);
+        fleches = tabFleches[nombreFleches];
+        bot2 = new Archer('Bot2', 95, 20, fleches);
         break;
     case "Mage":
         mana = tabMana[nbMana];
@@ -259,19 +257,31 @@ switch (posture) {
 }
 
 function attaquer_boss(){
+    alert(perso.nom+" attaque le boss !")
     the_boss.nbVie -= perso.nbAttaque;
+    alert("Le boss a perdu "+perso.nbAttaque+" PV !\nIl lui reste "+the_boss.nbVie+" PV")
+    
+    alert(bot1.nom+" attaque le boss !")
     the_boss.nbVie -= bot1.nbAttaque;
+    alert("Le boss a perdu "+bot1.nbAttaque+" PV !\nIl lui reste "+the_boss.nbVie+" PV")
+
+    alert(bot2.nom+" attaque le boss !")
     the_boss.nbVie -= bot2.nbAttaque;
+    alert("Le boss a perdu "+bot2.nbAttaque+" PV !\nIl lui reste "+the_boss.nbVie+" PV")
 }
 
 function attaque_du_boss(){
     let tabPerso=[perso,bot1,bot2]
     let at = Math.round(Math.random() * 2)
+    alert("Le boss attaque "+tabPerso[at].nom)
     tabPerso[at].nbVie-= the_boss.nbAttaque
+    alert(tabPerso[at].nom+" a perdu "+the_boss.nbAttaque+" PV !\nIl lui reste "+tabPerso[at].nbVie+" PV ")
 }
 
+let choixEnig = Math.round(Math.random() * 2)
+let essais = 2
 function poserEnigme(){
-    let enigme1 = "Avant-hier, Catherine avait 17 ans ; l'année prochaine, elle aura 20 ans. Comment est-ce possible ?"
+    let enigme1 = "Une fois que l'on me prononce, je n'existe plus. Qui suis-je ?"
     let enigme2 = "Je suis d'eau,je suis d'air,et je suis d'électricité. Qui suis-je"
     let enigme3 = "Pour moi l'accouchement est avant la grossesse, l'enfance avant la naissance, l'adolescence avant l'enfant, la mort avant la vie. Qui suis-je?"
 
@@ -282,10 +292,9 @@ function poserEnigme(){
     let tabEnigme = [enigme1,enigme2,enigme3]
     let tabReponse = [reponse1,reponse2,reponse3]
 
-    let choixEnig = Math.round(Math.random() * 2)
-
+    
     let question;
-    let essais = 3
+    
     do{
         question = prompt(tabEnigme[choixEnig]);
         essais--;
@@ -305,3 +314,9 @@ do{
     }
     
 }while((the_boss.nbVie > 0) || (perso.nbVie == 0 && bot1.nbVie == 0 && bot2.nbVie == 0))
+
+if(the_boss.nbVie <= 0 && (perso.nbVie > 0 || bot1.nbVie > 0 || bot2.nbVie > 0)){
+    alert('Vous avez gagné')
+}else{
+    alert('Game Over !')
+}
