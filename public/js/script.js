@@ -107,7 +107,7 @@ class Boss {
         this.nbVie = nbVie
         this.nbAttaque = nbAttaque
     }
-    
+
 }
 
 
@@ -147,7 +147,7 @@ class Mage extends Heros {
         super(nom, nbVie, nbAttaque);
         this.mana = mana;
         this.type = 'Mage';
-        this.posture= '';
+        this.posture = '';
     }
 
 }
@@ -176,7 +176,7 @@ let pseudo;
 let perso;
 let bot1;
 let bot2;
-let mana,fleches;
+let mana, fleches;
 let posture;
 
 // Demande du choix de héros
@@ -213,17 +213,17 @@ switch (choice) {
         break;
     case "Mage":
         mana = tabMana[nbMana];
-        perso = new Mage(pseudo, 110, 10,mana);    
-        bot1 = new Guerrier('Bot1', 100, 15,0);
+        perso = new Mage(pseudo, 110, 10, mana);
+        bot1 = new Guerrier('Bot1', 100, 15, 0);
         fleches = tabFleches[nombreFleches];
-        bot2 = new Archer('Bot2', 95, 20,fleches);
+        bot2 = new Archer('Bot2', 95, 20, fleches);
         break;
     case "Archer":
         fleches = tabFleches[nombreFleches];
-        perso = new Archer(pseudo, 95, 20,fleches);
+        perso = new Archer(pseudo, 95, 20, fleches);
         mana = tabMana[nbMana];
-        bot1 = new Mage('Bot1', 110, 10,mana);
-        bot2 = new Guerrier('Bot2', 100, 15,0);
+        bot1 = new Mage('Bot1', 110, 10, mana);
+        bot2 = new Guerrier('Bot2', 100, 15, 0);
         break;
 }
 
@@ -256,31 +256,48 @@ switch (posture) {
         alert(perso.nom + " est passé en mode " + perso.posture)
 }
 
-function attaquer_boss(){
-    alert(perso.nom+" attaque le boss !")
+function attaquer_boss() {
+    alert(perso.nom + " attaque le boss !")
     the_boss.nbVie -= perso.nbAttaque;
-    alert("Le boss a perdu "+perso.nbAttaque+" PV !\nIl lui reste "+the_boss.nbVie+" PV")
-    
-    alert(bot1.nom+" attaque le boss !")
-    the_boss.nbVie -= bot1.nbAttaque;
-    alert("Le boss a perdu "+bot1.nbAttaque+" PV !\nIl lui reste "+the_boss.nbVie+" PV")
+    alert("Le boss a perdu " + perso.nbAttaque + " PV !\nIl lui reste " + the_boss.nbVie + " PV")
 
-    alert(bot2.nom+" attaque le boss !")
+    alert(bot1.nom + " attaque le boss !")
+    the_boss.nbVie -= bot1.nbAttaque;
+    alert("Le boss a perdu " + bot1.nbAttaque + " PV !\nIl lui reste " + the_boss.nbVie + " PV")
+
+    alert(bot2.nom + " attaque le boss !")
     the_boss.nbVie -= bot2.nbAttaque;
-    alert("Le boss a perdu "+bot2.nbAttaque+" PV !\nIl lui reste "+the_boss.nbVie+" PV")
+    alert("Le boss a perdu " + bot2.nbAttaque + " PV !\nIl lui reste " + the_boss.nbVie + " PV")
 }
 
-function attaque_du_boss(){
-    let tabPerso=[perso,bot1,bot2]
-    let at = Math.round(Math.random() * 2)
-    alert("Le boss attaque "+tabPerso[at].nom)
-    tabPerso[at].nbVie-= the_boss.nbAttaque
-    alert(tabPerso[at].nom+" a perdu "+the_boss.nbAttaque+" PV !\nIl lui reste "+tabPerso[at].nbVie+" PV ")
+let tabPerso = [perso, bot1, bot2]
+
+function attaque_du_boss() {
+    let i = 2;
+    let at = Math.round(Math.random() * i)
+
+
+    alert("Le boss attaque " + tabPerso[at].nom)
+    tabPerso[at].nbVie -= the_boss.nbAttaque
+    if (tabPerso[at].nbVie > 0) {
+        alert(tabPerso[at].nom + " a perdu " +
+            the_boss.nbAttaque + " PV !\nIl lui reste " + tabPerso[at].nbVie + " PV ")
+    } else {
+        alert(tabPerso[at].nom + " est mort !");
+        tabPerso.splice(at, 1);
+        i--;
+    }
+
+
+    // alert("Le boss attaque " + tabPerso[at].nom)
+    // tabPerso[at].nbVie -= the_boss.nbAttaque
+    // alert(tabPerso[at].nom + " a perdu " + the_boss.nbAttaque + " PV !\nIl lui reste " + tabPerso[at].nbVie + " PV ")
 }
 
 let choixEnig = Math.round(Math.random() * 2)
 let essais = 2
-function poserEnigme(){
+
+function poserEnigme() {
     let enigme1 = "Une fois que l'on me prononce, je n'existe plus. Qui suis-je ?"
     let enigme2 = "Je suis d'eau,je suis d'air,et je suis d'électricité. Qui suis-je"
     let enigme3 = "Pour moi l'accouchement est avant la grossesse, l'enfance avant la naissance, l'adolescence avant l'enfant, la mort avant la vie. Qui suis-je?"
@@ -289,34 +306,34 @@ function poserEnigme(){
     let reponse2 = "courant"
     let reponse3 = "dictionnaire"
 
-    let tabEnigme = [enigme1,enigme2,enigme3]
-    let tabReponse = [reponse1,reponse2,reponse3]
+    let tabEnigme = [enigme1, enigme2, enigme3]
+    let tabReponse = [reponse1, reponse2, reponse3]
 
-    
+
     let question;
-    
-    do{
+
+    do {
         question = prompt(tabEnigme[choixEnig]);
         essais--;
-    }while((question != tabReponse[choixEnig]) && essais>0)
-    if(essais == 0){
+    } while ((question != tabReponse[choixEnig]) && essais > 0)
+    if (essais == 0) {
         perso.nbVie = 0
         bot1.nbVie = 0
         bot2.nbVie = 0
     }
 
 }
-do{
+do {
     attaquer_boss()
     attaque_du_boss()
-    if(the_boss.nbVie <= 20 ){
+    if (the_boss.nbVie <= 20) {
         poserEnigme()
     }
-    
-}while((the_boss.nbVie > 0) || (perso.nbVie == 0 && bot1.nbVie == 0 && bot2.nbVie == 0))
 
-if(the_boss.nbVie <= 0 && (perso.nbVie > 0 || bot1.nbVie > 0 || bot2.nbVie > 0)){
+} while ((the_boss.nbVie > 0) || (perso.nbVie > 0 && bot1.nbVie > 0 && bot2.nbVie > 0))
+
+if (the_boss.nbVie <= 0 && (perso.nbVie > 0 || bot1.nbVie > 0 || bot2.nbVie > 0)) {
     alert('Vous avez gagné')
-}else{
+} else {
     alert('Game Over !')
 }
