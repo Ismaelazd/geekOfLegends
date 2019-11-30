@@ -165,9 +165,9 @@ class Archer extends Heros {
 
 
 
-let Sauron = new Boss('Sauron', 500, 135)
-let Chronos = new Boss('Chronos', 600, 130)
-let Lilith = new Boss('Lilith', 550, 130)
+let Sauron = new Boss('Sauron', 500, 75)
+let Chronos = new Boss('Chronos', 600, 80)
+let Lilith = new Boss('Lilith', 550, 70)
 let tabBoss = [Sauron, Chronos, Lilith]
 let bossChoice = Math.round(Math.random() * 2)
 let the_boss = tabBoss[bossChoice]
@@ -205,25 +205,25 @@ console.log(nombreFleches)
 //Création du héros et des bots
 switch (choice) {
     case "Guerrier":
-        perso = new Guerrier(pseudo, 100, 15, 0);
+        perso = new Guerrier(pseudo, 200, 35, 0);
         mana = tabMana[nbMana];
-        bot1 = new Mage('Bot1', 110, 10, mana);
+        bot1 = new Mage('Bot1', 210, 40, mana);
         fleches = tabFleches[nombreFleches];
-        bot2 = new Archer('Bot2', 95, 20, fleches);
+        bot2 = new Archer('Bot2', 195, 30, fleches);
         break;
     case "Mage":
         mana = tabMana[nbMana];
-        perso = new Mage(pseudo, 110, 10, mana);
-        bot1 = new Guerrier('Bot1', 100, 15, 0);
+        perso = new Mage(pseudo,  210, 40, mana);
+        bot1 = new Guerrier('Bot1', 200, 35, 0);
         fleches = tabFleches[nombreFleches];
-        bot2 = new Archer('Bot2', 95, 20, fleches);
+        bot2 = new Archer('Bot2', 195, 30, fleches);
         break;
     case "Archer":
         fleches = tabFleches[nombreFleches];
-        perso = new Archer(pseudo, 95, 20, fleches);
+        perso = new Archer(pseudo, 195, 30, fleches);
         mana = tabMana[nbMana];
-        bot1 = new Mage('Bot1', 110, 10, mana);
-        bot2 = new Guerrier('Bot2', 100, 15, 0);
+        bot1 = new Mage('Bot1', 210, 40, mana);
+        bot2 = new Guerrier('Bot2', 200, 35, 0);
         break;
 }
 
@@ -256,21 +256,21 @@ switch (posture) {
         alert(perso.nom + " est passé en mode " + perso.posture)
 }
 
+let tabPerso = [perso, bot1, bot2]
+
 function attaquer_boss() {
-    alert(perso.nom + " attaque le boss !")
-    the_boss.nbVie -= perso.nbAttaque;
-    alert("Le boss a perdu " + perso.nbAttaque + " PV !\nIl lui reste " + the_boss.nbVie + " PV")
 
-    alert(bot1.nom + " attaque le boss !")
-    the_boss.nbVie -= bot1.nbAttaque;
-    alert("Le boss a perdu " + bot1.nbAttaque + " PV !\nIl lui reste " + the_boss.nbVie + " PV")
+    for (let i = 0; i < tabPerso.length; i++) {
 
-    alert(bot2.nom + " attaque le boss !")
-    the_boss.nbVie -= bot2.nbAttaque;
-    alert("Le boss a perdu " + bot2.nbAttaque + " PV !\nIl lui reste " + the_boss.nbVie + " PV")
+        alert(tabPerso[i].nom + " attaque le boss !")
+        the_boss.nbVie -= tabPerso[i].nbAttaque;
+        alert("Le boss a perdu " + tabPerso[i].nbAttaque + " PV !\nIl lui reste " + the_boss.nbVie + " PV")
+    }
+
+    
 }
 
-let tabPerso = [perso, bot1, bot2]
+
 
 function attaque_du_boss() {
     let i = 2;
