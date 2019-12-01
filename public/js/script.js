@@ -165,9 +165,9 @@ class Archer extends Heros {
 
 
 
-let Sauron = new Boss('Sauron', 500, 75)
-let Chronos = new Boss('Chronos', 600, 80)
-let Lilith = new Boss('Lilith', 550, 70)
+let Sauron = new Boss('Sauron', 200, 75)
+let Chronos = new Boss('Chronos', 200, 80)
+let Lilith = new Boss('Lilith', 250, 70)
 let tabBoss = [Sauron, Chronos, Lilith]
 let bossChoice = Math.round(Math.random() * 2)
 let the_boss = tabBoss[bossChoice]
@@ -213,7 +213,7 @@ switch (choice) {
         break;
     case "Mage":
         mana = tabMana[nbMana];
-        perso = new Mage(pseudo,  210, 40, mana);
+        perso = new Mage(pseudo, 210, 40, mana);
         bot1 = new Guerrier('Bot1', 200, 35, 0);
         fleches = tabFleches[nombreFleches];
         bot2 = new Archer('Bot2', 195, 30, fleches);
@@ -259,15 +259,23 @@ switch (posture) {
 let tabPerso = [perso, bot1, bot2]
 
 function attaquer_boss() {
-
-    for (let i = 0; i < tabPerso.length; i++) {
-
+    let i = 0;
+    while (the_boss.nbVie > 0 && i < tabPerso.length) {
         alert(tabPerso[i].nom + " attaque le boss !")
         the_boss.nbVie -= tabPerso[i].nbAttaque;
-        alert("Le boss a perdu " + tabPerso[i].nbAttaque + " PV !\nIl lui reste " + the_boss.nbVie + " PV")
+        if(the_boss.nbVie > 0){
+            alert("Le boss a perdu " + tabPerso[i].nbAttaque + " PV !\nIl lui reste " + the_boss.nbVie + " PV")
+        }else{
+            alert('Le boss est mort')
+        }
+        
+        if (the_boss.nbVie <= 20 && the_boss.nbVie >0 ) {
+            poserEnigme()
+        }
+        i++
     }
 
-    
+
 }
 
 
@@ -325,15 +333,16 @@ function poserEnigme() {
 }
 do {
     attaquer_boss()
-    attaque_du_boss()
-    if (the_boss.nbVie <= 20) {
-        poserEnigme()
+    if (the_boss.nbVie > 0) {
+        attaque_du_boss()
+        
     }
 
-} while ((the_boss.nbVie > 0) || (perso.nbVie > 0 && bot1.nbVie > 0 && bot2.nbVie > 0))
 
-if (the_boss.nbVie <= 0 && (perso.nbVie > 0 || bot1.nbVie > 0 || bot2.nbVie > 0)) {
-    alert('Vous avez gagné')
-} else {
+} while ((the_boss.nbVie > 0) && (tabPerso.includes(perso) || tabPerso.includes(bot1) || tabPerso.includes(bot2)))
+
+if (the_boss.nbVie > 0 && tabPerso.length == 0) {
     alert('Game Over !')
+} else {
+    alert('Vous avez gagné')
 }
